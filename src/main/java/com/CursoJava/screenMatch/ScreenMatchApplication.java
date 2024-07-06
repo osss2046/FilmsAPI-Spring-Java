@@ -2,11 +2,16 @@ package com.CursoJava.screenMatch;
 
 import com.CursoJava.screenMatch.model.DatosEpisodio;
 import com.CursoJava.screenMatch.model.DatosSerie;
+import com.CursoJava.screenMatch.model.DatosTemporadas;
+import com.CursoJava.screenMatch.principal.Principal;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class ScreenMatchApplication implements CommandLineRunner {
@@ -17,19 +22,8 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var consumoApi = new ConsumoAPI();
-		var json = consumoApi.obtenerDatos("https://www.omdbapi.com/?t=game+of+thrones&apikey=375c629f");
-		///var json = consumoApi.obtenerDatos("https://coffee.alexflipnote.dev/random.json");
-		System.out.println(json);
-
-		ConvierteDatos conversor = new ConvierteDatos();
-		var datos = conversor.obtenerDatos(json, DatosSerie.class);
-		System.out.println(datos);
-
-		// mapeo de episodio
-		json = consumoApi.obtenerDatos("https://www.omdbapi.com/?t=game+of+thrones&Season=1&episode=1&apikey=375c629f");
-		DatosEpisodio episodios = conversor.obtenerDatos(json, DatosEpisodio.class);
-		System.out.println(episodios);
+		Principal principal = new Principal();
+		principal.MuestraMenu();
 
 	}
 }
