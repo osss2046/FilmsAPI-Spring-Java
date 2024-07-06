@@ -3,6 +3,7 @@ package com.CursoJava.screenMatch.principal;
 import com.CursoJava.screenMatch.model.DatosEpisodio;
 import com.CursoJava.screenMatch.model.DatosSerie;
 import com.CursoJava.screenMatch.model.DatosTemporadas;
+import com.CursoJava.screenMatch.model.Episodio;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
 
@@ -76,6 +77,14 @@ public class Principal {
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        // Convirtiendo los datos a una lista del tipo Episodio
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d)))
+                .collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
 
     }
 }
