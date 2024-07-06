@@ -7,8 +7,10 @@ import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -54,12 +56,26 @@ public class Principal {
 
         // mejorar lo anterior usando funciones lambda
 
-        temporadas.forEach(t -> {
-            System.out.println("Temporada: "+t.numero()+", Episodios: "+t.episodios().size());
-            t.episodios().forEach(e -> {
-                System.out.println("(" + e.numeroEpisodio() + "). " + e.titulo());
-            });
-        });
+//        temporadas.forEach(t -> {
+//            System.out.println("Temporada: "+t.numero()+", Episodios: "+t.episodios().size());
+//            t.episodios().forEach(e -> {
+//                System.out.println("(" + e.numeroEpisodio() + "). " + e.titulo());
+//            });
+//        });
+
+        // convertir todas las informaciones a una lista del tipo datosEpisodio
+
+        List<DatosEpisodio> datosEpisodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toList());
+
+        // Top 5 Episodios
+        System.out.println("Top 5 episodios");
+        datosEpisodios.stream()
+                .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
+                .limit(5)
+                .forEach(System.out::println);
 
     }
 }

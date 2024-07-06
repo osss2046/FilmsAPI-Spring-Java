@@ -23,10 +23,10 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Principal principal = new Principal();
-//		principal.MuestraMenu();
-		EjemploStreams ejemploStreams = new EjemploStreams();
-		ejemploStreams.muestraEjemplo();
+		Principal principal = new Principal();
+		principal.MuestraMenu();
+//		EjemploStreams ejemploStreams = new EjemploStreams();
+//		ejemploStreams.muestraEjemplo();
 	}
 }
 
