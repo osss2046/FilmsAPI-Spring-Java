@@ -1,5 +1,6 @@
 package com.CursoJava.screenMatch.principal;
 
+import com.CursoJava.screenMatch.model.DatosEpisodio;
 import com.CursoJava.screenMatch.model.DatosSerie;
 import com.CursoJava.screenMatch.model.DatosTemporadas;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
@@ -36,6 +37,29 @@ public class Principal {
             temporadas.add(datosTemporadas);
 
         }
-        temporadas.forEach(System.out::println);
+        //temporadas.forEach(System.out::println);
+
+
+        // Mostrar solo el titulo de los episodios para cada temporada
+//        for (int i = 0; i < datos.totalDeTemporadas(); i++) {
+//            int numeroTemporada = temporadas.get(i).numero();
+//            int numeroDeEpisodios = temporadas.get(i).episodios().size();
+//            System.out.println("Temporada: "+ numeroTemporada + ", Cantidad Episodios: "+ numeroDeEpisodios);
+//            List<DatosEpisodio> episodiosTemporada = temporadas.get(i).episodios();
+//            for (int j = 0; j < episodiosTemporada.size(); j++) {
+//                int nro = j+1;
+//                System.out.println("(" + nro + ") " + episodiosTemporada.get(j).titulo());
+//            }
+//        }
+
+        // mejorar lo anterior usando funciones lambda
+
+        temporadas.forEach(t -> {
+            System.out.println("Temporada: "+t.numero()+", Episodios: "+t.episodios().size());
+            t.episodios().forEach(e -> {
+                System.out.println("(" + e.numeroEpisodio() + "). " + e.titulo());
+            });
+        });
+
     }
 }
