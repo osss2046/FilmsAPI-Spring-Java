@@ -3,6 +3,7 @@ package com.CursoJava.screenMatch;
 import com.CursoJava.screenMatch.model.DatosEpisodio;
 import com.CursoJava.screenMatch.model.DatosSerie;
 import com.CursoJava.screenMatch.model.DatosTemporadas;
+import com.CursoJava.screenMatch.principal.EjemploStreams;
 import com.CursoJava.screenMatch.principal.Principal;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
@@ -22,9 +23,10 @@ public class ScreenMatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal();
-		principal.MuestraMenu();
-
+//		Principal principal = new Principal();
+//		principal.MuestraMenu();
+		EjemploStreams ejemploStreams = new EjemploStreams();
+		ejemploStreams.muestraEjemplo();
 	}
 }
 
