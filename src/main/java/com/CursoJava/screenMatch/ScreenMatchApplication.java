@@ -1,5 +1,6 @@
 package com.CursoJava.screenMatch;
 
+import com.CursoJava.screenMatch.model.DatosEpisodio;
 import com.CursoJava.screenMatch.model.DatosSerie;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
@@ -24,6 +25,11 @@ public class ScreenMatchApplication implements CommandLineRunner {
 		ConvierteDatos conversor = new ConvierteDatos();
 		var datos = conversor.obtenerDatos(json, DatosSerie.class);
 		System.out.println(datos);
+
+		// mapeo de episodio
+		json = consumoApi.obtenerDatos("https://www.omdbapi.com/?t=game+of+thrones&Season=1&episode=1&apikey=375c629f");
+		DatosEpisodio episodios = conversor.obtenerDatos(json, DatosEpisodio.class);
+		System.out.println(episodios);
 
 	}
 }
