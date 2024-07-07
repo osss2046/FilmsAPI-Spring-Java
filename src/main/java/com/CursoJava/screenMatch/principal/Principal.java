@@ -6,10 +6,7 @@ import com.CursoJava.screenMatch.service.ConvierteDatos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -90,21 +87,37 @@ public class Principal {
 
         // Busqueda de episodios a partir de X años
 
-        System.out.println("Por favor indica el año a partir del cual deseas ver los episodios");
-        var fecha = teclado.nextInt();
-        teclado.nextLine();
+//        System.out.println("Por favor indica el año a partir del cual deseas ver los episodios");
+//        var fecha = teclado.nextInt();
+//        teclado.nextLine();
+//
+//        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
+//
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//        episodios.stream()
+//                .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
+//                .forEach(e -> System.out.println(
+//                        "Temporada: " + e.getTemporada()
+//                                + ". Episodio: " + e.getTitulo()
+//                                + ". Fecha de lanzamiento: " + e.getFechaDeLanzamiento().format(dtf)
+//
+//                ));
 
-        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        episodios.stream()
-                .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
-                .forEach(e -> System.out.println(
-                        "Temporada: " + e.getTemporada()
-                                + ". Episodio: " + e.getTitulo()
-                                + ". Fecha de lanzamiento: " + e.getFechaDeLanzamiento().format(dtf)
+        // Busca episodios por pedazo del titulo
+        System.out.println("Por favor escriba el titulo del episodio");
+        var pedazoTitulo = teclado.nextLine();
 
-                ));
+        Optional<Episodio> episodioEncontrado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(pedazoTitulo.toUpperCase()))
+                .findFirst();
+        if(episodioEncontrado.isPresent()){
+            System.out.println("Episodio encontrado c: ");
+            System.out.println(episodioEncontrado);
+        }else{
+            System.out.println("Episodio No encontrado :c ");
+        }
     }
 }
