@@ -1,35 +1,31 @@
 package com.CursoJava.screenMatch.model;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Episodio {
     private Integer temporada;
     private String titulo;
-    private Integer nroEpisodio;
+    private Integer numeroEpisodio;
     private Double evaluacion;
     private LocalDate fechaDeLanzamiento;
 
     public Episodio(Integer numero, DatosEpisodio d) {
         this.temporada = numero;
         this.titulo = d.titulo();
-        this.nroEpisodio = d.numeroEpisodio();
+        this.numeroEpisodio = d.numeroEpisodio();
         try{
             this.evaluacion = Double.valueOf(d.evaluacion());
-
         }catch (NumberFormatException e){
             this.evaluacion = 0.0;
         }
         try{
-            this.fechaDeLanzamiento = LocalDate.parse(d.fechaLanzamiento());
-
-        }catch (DateTimeException e){
+            this.fechaDeLanzamiento = LocalDate.parse(d.fechaDeLanzamiento());
+        } catch (DateTimeParseException e){
             this.fechaDeLanzamiento = null;
         }
 
     }
-
-
 
     public Integer getTemporada() {
         return temporada;
@@ -47,12 +43,12 @@ public class Episodio {
         this.titulo = titulo;
     }
 
-    public Integer getNroEpisodio() {
-        return nroEpisodio;
+    public Integer getNumeroEpisodio() {
+        return numeroEpisodio;
     }
 
-    public void setNroEpisodio(Integer nroEpisodio) {
-        this.nroEpisodio = nroEpisodio;
+    public void setNumeroEpisodio(Integer numeroEpisodio) {
+        this.numeroEpisodio = numeroEpisodio;
     }
 
     public Double getEvaluacion() {
@@ -75,9 +71,9 @@ public class Episodio {
     public String toString() {
         return
                 "temporada=" + temporada +
-                ", titulo='" + titulo + '\'' +
-                ", nroEpisodio=" + nroEpisodio +
-                ", evaluacion=" + evaluacion +
-                ", fechaDeLanzamiento=" + fechaDeLanzamiento;
+                        ", titulo='" + titulo + '\'' +
+                        ", numeroEpisodio=" + numeroEpisodio +
+                        ", evaluacion=" + evaluacion +
+                        ", fechaDeLanzamiento=" + fechaDeLanzamiento;
     }
 }
