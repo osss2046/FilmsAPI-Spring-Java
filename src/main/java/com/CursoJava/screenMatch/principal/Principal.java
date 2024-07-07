@@ -105,19 +105,40 @@ public class Principal {
 //                ));
 
 
+//
+//        // Busca episodios por pedazo del titulo
+//        System.out.println("Por favor escriba el titulo del episodio");
+//        var pedazoTitulo = teclado.nextLine();
+//
+//        Optional<Episodio> episodioEncontrado = episodios.stream()
+//                .filter(e -> e.getTitulo().toUpperCase().contains(pedazoTitulo.toUpperCase()))
+//                .findFirst();
+//        if(episodioEncontrado.isPresent()){
+//            System.out.println("Episodio encontrado c: ");
+//            System.out.println(episodioEncontrado);
+//        }else{
+//            System.out.println("Episodio No encontrado :c ");
+//        }
 
-        // Busca episodios por pedazo del titulo
-        System.out.println("Por favor escriba el titulo del episodio");
-        var pedazoTitulo = teclado.nextLine();
 
-        Optional<Episodio> episodioEncontrado = episodios.stream()
-                .filter(e -> e.getTitulo().toUpperCase().contains(pedazoTitulo.toUpperCase()))
-                .findFirst();
-        if(episodioEncontrado.isPresent()){
-            System.out.println("Episodio encontrado c: ");
-            System.out.println(episodioEncontrado);
-        }else{
-            System.out.println("Episodio No encontrado :c ");
-        }
+        Map<Integer, Double> evaluacionesPorTemporada = episodios.stream()
+                .filter(e -> e.getEvaluacion() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                        Collectors.averagingDouble(Episodio::getEvaluacion)));
+
+        System.out.println(evaluacionesPorTemporada);
+
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getEvaluacion() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getEvaluacion));
+        System.out.println(
+                "Promedio de las evaluaciones: " + est.getAverage()
+                        + "\nEpisodio Mejor evaluado: " + est.getMax()
+                        + "\nEpisodio Peor evaluado: " + est.getMin()
+        );
+
+
+
+
     }
 }
