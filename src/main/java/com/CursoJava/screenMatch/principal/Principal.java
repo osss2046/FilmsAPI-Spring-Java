@@ -35,6 +35,7 @@ public class Principal {
                     4 - Buscar Serie por Titulo
                     5 - Top 5 Mejores Series
                     6 - Buscar Series por Categoria
+                    7 - filtrar series por temporadas y evaluación
                                   
                     0 - Salir
                     """;
@@ -61,6 +62,9 @@ public class Principal {
                 case 6:
                     buscarSeriesPorCategorias();
                     break;
+                case 7:
+                    filtrarSeriesPorTemporadaYEvaluacion();
+                    break;
 
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -71,7 +75,6 @@ public class Principal {
         }
 
     }
-
 
 
     private DatosSerie getDatosSerie() {
@@ -159,5 +162,17 @@ public class Principal {
 
     }
 
+    public void filtrarSeriesPorTemporadaYEvaluacion(){
+        System.out.println("¿Filtrar series con cuántas temporadas? ");
+        var totalTemporadas = teclado.nextInt();
+        teclado.nextLine();
+        System.out.println("¿Com evaluación apartir de cuál valor? ");
+        var evaluacion = teclado.nextDouble();
+        teclado.nextLine();
+        List<Serie> filtroSeries = repository.seriesPorTemparadaYEvaluacion(totalTemporadas,evaluacion);
+        System.out.println("*** Series filtradas ***");
+        filtroSeries.forEach(s ->
+                System.out.println(s.getTitulo() + "  - evaluacion: " + s.getEvaluacion()));
+    }
 
 }
