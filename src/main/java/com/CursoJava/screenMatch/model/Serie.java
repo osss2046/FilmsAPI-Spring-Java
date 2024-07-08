@@ -27,8 +27,9 @@ public class Serie {
     private String actores;
     private String sinopsis;
 
-    @Transient
+    @OneToMany(mappedBy = "serie")
     private List<Episodio> episodios;
+
 
     public Long getId() {
         return Id;
@@ -36,6 +37,14 @@ public class Serie {
 
     public void setId(Long id) {
         Id = id;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 
     public Serie(DatosSerie datosSerie) {
