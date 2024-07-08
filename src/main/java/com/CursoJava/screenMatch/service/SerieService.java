@@ -2,6 +2,7 @@ package com.CursoJava.screenMatch.service;
 
 import com.CursoJava.screenMatch.dto.EpisodioDTO;
 import com.CursoJava.screenMatch.dto.SerieDTO;
+import com.CursoJava.screenMatch.model.Categoria;
 import com.CursoJava.screenMatch.model.Serie;
 import com.CursoJava.screenMatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,17 @@ public class SerieService {
         }
         return null;
 
+    }
+
+    public List<EpisodioDTO> obtenerTemporadasPorNro(Long id, Long numeroTemporada) {
+        return repository.obtenerTemporadasPorNro(id, numeroTemporada).stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(),
+                        e.getTitulo(), e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerSeriePorCategorias(String nombreGenero) {
+        Categoria categoria = Categoria.fromEspanol(nombreGenero);
+        return convierteDatos(repository.findByGenero(categoria));
     }
 }
