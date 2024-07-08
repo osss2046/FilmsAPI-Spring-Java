@@ -1,5 +1,6 @@
 package com.CursoJava.screenMatch.service;
 
+import com.CursoJava.screenMatch.dto.EpisodioDTO;
 import com.CursoJava.screenMatch.dto.SerieDTO;
 import com.CursoJava.screenMatch.model.Serie;
 import com.CursoJava.screenMatch.repository.SerieRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class SerieService {
@@ -25,12 +27,37 @@ public class SerieService {
 
     }
 
+    public List<SerieDTO> obtenerLanzamientosMasRecientes() {
+        return convierteDatos(repository.lanzamientosMasRecientes());
+    }
 
     public List<SerieDTO> convierteDatos(List<Serie> serie) {
         return serie.stream()
-                .map(s -> new SerieDTO(s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(),
+                .map(s -> new SerieDTO(s.getId(),s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(),
                         s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis()))
                 .collect(Collectors.toList());
     }
 
+    public SerieDTO obtenerPorId(Long id) {
+        Optional<Serie> serie = repository.findById(id);
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return new SerieDTO(s.getId(),s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(),
+                    s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis());
+        } else return null;
+
+    }
+
+    public List<EpisodioDTO> obtenerTodasLasTemporadas(Long id) {
+        Optional<Serie> serie = repository.findById(id);
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return s.getEpisodios().stream()
+                    .map(e -> new EpisodioDTO(e.getTemporada(),
+                            e.getTitulo(), e.getNumeroEpisodio()))
+                    .collect(Collectors.toList());
+        }
+        return null;
+
+    }
 }
