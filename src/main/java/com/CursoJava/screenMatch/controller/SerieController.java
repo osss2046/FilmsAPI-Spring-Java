@@ -2,6 +2,7 @@ package com.CursoJava.screenMatch.controller;
 
 import com.CursoJava.screenMatch.dto.SerieDTO;
 import com.CursoJava.screenMatch.repository.SerieRepository;
+import com.CursoJava.screenMatch.service.SerieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +15,16 @@ import java.util.stream.Collectors;
 public class SerieController {
 
     @Autowired
-    private SerieRepository repository;
+    private SerieService servicio;
 
     @GetMapping("/series")
     public List<SerieDTO> obtenerTodasLasSeries() {
-        return repository.findAll().stream()
-                .map(s -> new SerieDTO(s.getTitulo(), s.getTotalTemporadas(), s.getEvaluacion(),
-                        s.getPoster(), s.getGenero(), s.getActores(), s.getSinopsis()))
-                .collect(Collectors.toList());
+        return servicio.obtenerTodasLasSeries();
+
     }
 
-
+    @GetMapping("/series/top5")
+    public List<SerieDTO> obtenerTop5() {
+        return servicio.obtenerTop5();
+    }
 }
