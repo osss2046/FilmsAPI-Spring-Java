@@ -3,6 +3,7 @@ package com.CursoJava.screenMatch.principal;
 import com.CursoJava.screenMatch.model.DatosSerie;
 import com.CursoJava.screenMatch.model.DatosTemporadas;
 import com.CursoJava.screenMatch.model.Serie;
+import com.CursoJava.screenMatch.repository.SerieRepository;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
 import java.util.ArrayList;
@@ -19,6 +20,11 @@ public class Principal {
     private ConvierteDatos conversor = new ConvierteDatos();
 
     private List<DatosSerie> datosSeries = new ArrayList<>();
+    private SerieRepository repository;
+
+    public Principal(SerieRepository repository) {
+        this.repository = repository;
+    }
 
 
     public void muestraMenu() {
@@ -78,15 +84,15 @@ public class Principal {
     }
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
-        datosSeries.add(datos);
+        //datosSeries.add(datos);
+        Serie serie = new Serie(datos);
+        repository.save(serie);
         System.out.println(datos);
     }
 
     private void mostrarSeriesBuscadas() {
-        List<Serie> series = new ArrayList<>();
-        series = datosSeries.stream()
-                .map(d -> new Serie(d))
-                .collect(Collectors.toList());
+        List<Serie> series = repository.findAll();
+
         series.stream().sorted(Comparator.comparing((Serie::getGenero)))
                 .forEach(System.out::println);
 
