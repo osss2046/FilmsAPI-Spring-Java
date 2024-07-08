@@ -1,9 +1,6 @@
 package com.CursoJava.screenMatch.principal;
 
-import com.CursoJava.screenMatch.model.DatosSerie;
-import com.CursoJava.screenMatch.model.DatosTemporadas;
-import com.CursoJava.screenMatch.model.Episodio;
-import com.CursoJava.screenMatch.model.Serie;
+import com.CursoJava.screenMatch.model.*;
 import com.CursoJava.screenMatch.repository.SerieRepository;
 import com.CursoJava.screenMatch.service.ConsumoAPI;
 import com.CursoJava.screenMatch.service.ConvierteDatos;
@@ -37,6 +34,7 @@ public class Principal {
                     3 - Mostrar series buscadas
                     4 - Buscar Serie por Titulo
                     5 - Top 5 Mejores Series
+                    6 - Buscar Series por Categoria
                                   
                     0 - Salir
                     """;
@@ -59,6 +57,9 @@ public class Principal {
                     break;
                 case 5:
                     buscarTop5Series();
+                    break;
+                case 6:
+                    buscarSeriesPorCategorias();
                     break;
 
                 case 0:
@@ -146,6 +147,16 @@ public class Principal {
         List<Serie> topSeries = repository.findTop5ByOrderByEvaluacionDesc();
         topSeries.forEach(s ->
                 System.out.println("Titulo: " + s.getTitulo() + " - Evaluación: " + s.getEvaluacion()));
+    }
+
+    private void buscarSeriesPorCategorias() {
+        System.out.println("Escriba el genero/categoria por la cual desea buscar");
+        var genero = teclado.nextLine();
+        var categoria = Categoria.fromEspanol(genero);
+        List<Serie> seriesPorCategoria = repository.findByGenero(categoria);
+        System.out.println("Las series de la categoría " + genero);
+        seriesPorCategoria.forEach(System.out::println);
+
     }
 
 
